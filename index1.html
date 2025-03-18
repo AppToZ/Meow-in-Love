@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Meow In Love</title>
+    <title>Document</title>
 </head>
 <body>
     <div id="splash-screen">
         <img src="hhh.gif" alt="Title" />
     </div>
     <section class="preview__container">
-        <article class="preview mobile" tabindex="0" style="--img: url('ep.png');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
         <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
         <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
         <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
@@ -200,8 +200,20 @@
         });
     }
 
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    // Enable scroll effect only for mobile screens (width <= 768px)
+    function enableMobileScrollEffect() {
+        if (window.innerWidth <= 768) {
+            window.addEventListener('scroll', handleScroll);
+        } else {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }
+
+    // Initial check on page load
+    enableMobileScrollEffect();
+
+    // Re-check on window resize
+    window.addEventListener('resize', enableMobileScrollEffect);
 
     // Add a CSS class for the hover effect
     const style = document.createElement('style');
