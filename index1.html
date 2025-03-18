@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Document</title>
+</head>
+<body>
+    <div id="splash-screen">
+        <img src="hhh.gif" alt="Title" />
+    </div>
+    <section class="preview__container">
+        <article class="preview mobile" tabindex="0" style="--img: url('ep.png');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>  
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+        <article class="preview mobile" tabindex="0" style="--img: url('1.jpeg');"></article>
+    </section> 
+</body>
+<style>
+    :root {
+        --bg: 25% 0.0075 70;
+        --pink: 77.75% 0.1003 350.51;
+        --gold: 84.16% 0.1169 71.19;
+        --mint: 84.12% 0.1334 165.28;
+        --mobile--w: 360px;
+        --mobile--h: 540px;
+        --outline-w: 9px;
+        --preview-bg: #fff;
+    }
+    /* Splash screen styles */
+    #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        opacity: 1;
+        animation: fadeOut 4s ease-out forwards;
+    }
+
+    #splash-screen img {
+        width: 250px; /* Adjust based on your image size */
+        height: auto;
+        animation: bounce 1s infinite alternate;
+    }
+
+    body {
+        height: 100%;
+        background: linear-gradient(
+            50deg,
+            oklch(from oklch(var(--bg)) 50% c h),
+            oklch(from oklch(var(--bg)) 90% c h)
+        );
+        background-attachment: fixed;
+        padding: 3rem 10vw;
+        margin: 0; /* Remove any default margin */
+        overflow-x: hidden; /* Disable horizontal scrolling */
+    }
+
+    .preview__container {
+        display: flex;
+        flex-wrap: wrap;
+        place-items: center;
+        place-content: center;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .preview {
+        --bg-pos-y--start: 0;
+        --bg-pos-y--end: 0;
+        --bg-pos-y: var(--bg-pos-y--start);
+        --shadow-blur: 24px;
+        --shadow-color: oklch(var(--bg));
+        background-clip: padding-box;
+        background-image: var(--img);
+        background-position-y: var(--bg-pos-y);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        border: var(--outline-w) solid var(--border-color, transparent);
+        border-radius: 6px;
+        box-shadow: 0 0 var(--shadow-blur) 0 var(--shadow-color);
+        transition-property: border, box-shadow, filter, outline-offset, opacity, rotate, scale, z-index;
+        transition-duration: 0.15s, 0.15s, 0.6s, 0.6s, 0.3s, 0.3s, 0.3s, 0.15s;
+        filter: grayscale(100%) sepia(5%) blur(8px); /* Apply blur */
+        mix-blend-mode: multiply;
+        opacity: 0.69;
+        scale: 0.85;
+        rotate: var(--rotation, -4deg);
+        outline: var(--outline-w) solid var(--preview-bg);
+        outline-offset: var(--outline-w);
+        min-height: var(--mobile--h);
+        height: 100%;
+        min-width: var(--mobile--w);
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    /* Remove blur for the first article */
+    .preview:first-of-type {
+        filter: none; /* Removes the blur for the first article */
+        opacity: 1;  /* Makes the first article fully opaque */
+    }
+
+    /* Apply blur to all images when one is hovered or focused */
+    .preview:hover,
+    .preview:focus-within {
+        filter: none; /* Removes the blur effect on the hovered or focused image */
+        opacity: 1;
+    }
+
+    /* When any article is hovered, make the first article blurred as well */
+    .preview:hover ~ .preview:first-of-type,
+    .preview:focus-within ~ .preview:first-of-type {
+        filter: grayscale(100%) sepia(5%) blur(8px); /* Reapply blur to the first image */
+        opacity: 0.69;
+    }
+
+    .preview:hover, .preview:focus-within {
+        --shadow-blur: 200px;
+        --shadow-color: oklch(var(--gold));
+        --border-color: var(--shadow-color);
+        background-color: white;
+        mix-blend-mode: initial;
+        filter: none;  /* Remove blur on hover or focus */
+        opacity: 1;    
+        outline-offset: calc(var(--outline-w) / 2);
+        scale: 1;
+        rotate: 0deg;
+    }
+
+    .preview:focus-within {
+        --shadow-color: oklch(var(--pink));
+        z-index: 5;
+    }
+
+    .preview:hover {
+        z-index: 6;
+    }
+
+    .preview.mobile {
+        max-height: var(--mobile--h);
+        max-width: var(--mobile--w);
+    }
+
+    /* Mobile-specific adjustments */
+    @media (max-width: 768px) {
+        .preview__container {
+            margin-left: -10; /* Remove left margin */
+        }
+
+        .preview {
+            width: 100%; /* Ensure preview elements take up full width on small screens */
+            margin: 5px 0; /* Add some margin between elements */
+        }
+    }
+</style>
+<script>
+    // Hide splash screen after 4 seconds
+    setTimeout(() => {
+        document.getElementById('splash-screen').style.display = 'none';
+    }, 4000);
+
+    // Function to check if an element is in the viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    // Function to handle scroll events
+    function handleScroll() {
+        const previews = document.querySelectorAll('.preview');
+        previews.forEach(preview => {
+            if (isInViewport(preview)) {
+                preview.classList.add('hover-effect'); // Add a class to simulate hover
+            } else {
+                preview.classList.remove('hover-effect'); // Remove the class if not in viewport
+            }
+        });
+    }
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Add a CSS class for the hover effect
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .preview.hover-effect {
+            --shadow-blur: 200px;
+            --shadow-color: oklch(var(--gold));
+            --border-color: var(--shadow-color);
+            background-color: white;
+            mix-blend-mode: initial;
+            filter: none;
+            opacity: 1;
+            outline-offset: calc(var(--outline-w) / 2);
+            scale: 1;
+            rotate: 0deg;
+            z-index: 6;
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</html>
