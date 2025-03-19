@@ -7,6 +7,14 @@
     <title>Meow In Love</title>
     <style>
         /* Same as your existing styles, no changes here */
+        *:focus {
+        outline: none !important;
+    }
+
+    /* Remove tap highlight on mobile devices */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
         body {
             margin: 40px 0;
             font-family: "Raleway";
@@ -171,6 +179,7 @@
 
             .card-wrap.scrolled {
                 pointer-events: auto;
+                
             }
 
             .card-wrap.scrolled .card-info {
@@ -184,6 +193,7 @@
             .card-wrap.scrolled .card-info:after {
                 opacity: 1;
                 transform: translateY(0);
+                
             }
 
             .card-wrap.scrolled .card-bg {
@@ -192,6 +202,7 @@
 
             .card-wrap.scrolled .card {
                 box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, white 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
+                
             }
         }
 
