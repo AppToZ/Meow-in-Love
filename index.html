@@ -2,184 +2,366 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Meow In Love</title>
-</head>
-<body>
-    <div id="splash-screen">
-        <img src="hh.gif" alt="Title" />
-    </div>
-    
-    <section class="preview__container">
-        <article class="preview mobile" tabindex="0" style="--img: url('ep.png');">
-        </article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep2.png');"></article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep3.png');"></article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep4.png');"></article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep5.png');"></article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep6.png');"></article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep7.png');"></article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep9.png');"></article>
-        <article class="preview mobile" tabindex="0" style="--img: url('ep8.png');"></article>
-  
-    </section> 
-</body>
-<style>
-    :root {
-        --bg: 25% 0.0075 70;
-        --pink: 80.75% 0.1003 350.51;
-        --gold: 84.16% 0.1169 71.19;
-        --mint: 84.12% 0.1334 165.28;
-        --mobile--w: 360px;
-        --mobile--h: 540px;
-        --outline-w: 9px;
-        --preview-bg: #fff;
-        --label-bg: #ff4081; /* Pink background for the label */
-        --label-text-color: white;
-        --label-font-size: 16px;
-        --label-border-radius: 10px;
-    }
-        #splash-screen {
-            position: fixed;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Hover Effect</title>
+    <style>
+        /* Same as your existing styles, no changes here */
+        body {
+            margin: 40px 0;
+            font-family: "Raleway";
+            font-size: 17px;
+            font-weight: 500;
+            background-color: #121212;
+            -webkit-font-smoothing: antialiased;
+            user-select: none; /* Disable text selection */
+        }
+
+        .title {
+            font-family: "Raleway";
+            font-size: 24px;
+            font-weight: 700;
+            color: #5D4037;
+            text-align: center;
+        }
+
+        p {
+            line-height: 2em;
+        }
+
+        h1 + p, p + p {
+            margin-top: -5px;
+        }
+
+        .container {
+            padding: 40px 80px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card-wrap {
+            margin: 10px;
+            transform: perspective(800px);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card-wrap.hovered .card-info {
+            transform: translateY(0);
+        }
+
+        .card-wrap.hovered .card-info p {
+            opacity: 1;
+        }
+
+        .card-wrap.hovered .card-info, .card-wrap.hovered .card-info p {
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .card-wrap.hovered .card-info:after {
+            transition: 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-wrap.hovered .card-bg {
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 3s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0.8;
+        }
+
+        .card-wrap.hovered .card {
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, white 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
+        }
+
+        .card {
+            position: relative;
+            flex: 0 0 240px;
+            width: 260px;
+            height: 360px;
+            background-color: #333;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset rgba(255, 255, 255, 0.5) 0 0 0 6px;
+            transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        }
+
+        .card-bg {
+    opacity: 0.5;
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 5s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    pointer-events: none;
+    filter: blur(0); /* Initially no blur */
+}
+
+        .card-info {
+            padding: 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+            transform: translateY(40%);
+            transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .card-info p {
+            opacity: 0;
+            text-shadow: black 0 2px 3px;
+            transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .card-info * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-info:after {
+            content: "";
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            z-index: 0;
+            width: 130%;
             height: 100%;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            opacity: 1;
-            animation: fadeOut 5s ease-out forwards;
+            background-image: linear-gradient(to bottom, transparent 0%, rgb(244, 0, 102) 100%);
+            background-blend-mode: overlay;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: 1s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         }
 
-        #splash-screen img {
-            width: 200px; /* Adjust based on your image size */
-            height: auto;
-            animation: bounce 1s infinite alternate;
-            filter: brightness(120%) contrast(120%); /* Increase brightness and contrast by 20% */
-
-        }
-    body {
-        height: 100%;
-        background: linear-gradient(
-            50deg,
-            oklch(from oklch(var(--bg)) 50% c h),
-            oklch(from oklch(var(--bg)) 90% c h)
-        );
-        background-attachment: fixed;
-        padding: 3rem 10vw;
-        margin: 0;
-        overflow-x: hidden;
-    }
-    .preview__container {
-        display: flex;
-        flex-wrap: wrap;
-        place-items: center;
-        place-content: center;
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .preview {
-        --bg-pos-y--start: 0;
-        --bg-pos-y--end: 0;
-        --bg-pos-y: var(--bg-pos-y--start);
-        --shadow-blur: 24px;
-        --shadow-color: oklch(var(--bg));
-        background-clip: padding-box;
-        background-image: var(--img);
-        background-position-y: var(--bg-pos-y);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
-        border: var(--outline-w) solid var(--border-color, transparent);
-        border-radius: 6px;
-        box-shadow: 0 0 var(--shadow-blur) 0 var(--shadow-color);
-        transition-property: border, box-shadow, filter, outline-offset, opacity, rotate, scale, z-index;
-        transition-duration: 0.15s, 0.15s, 0.6s, 0.6s, 0.3s, 0.3s, 0.3s, 0.15s;
-        filter: grayscale(100%) sepia(5%) blur(2px); /* Apply blur */
-        mix-blend-mode: multiply;
-        opacity: 0.69;
-        scale: 0.85;
-        rotate: var(--rotation, -4deg);
-        outline: var(--outline-w) solid var(--preview-bg);
-        outline-offset: var(--outline-w);
-        min-height: var(--mobile--h);
-        height: 100%;
-        min-width: var(--mobile--w);
-        width: 100%;
-        position: relative;
-        box-sizing: border-box;
-    }
-    .preview:first-of-type {
-        filter: none; /* Removes the blur for the first article */
-        opacity: 1;  /* Makes the first article fully opaque */
-        --shadow-blur: 200px;
-        --shadow-color: oklch(var(--pink));
-        --border-color: var(--shadow-color);
-        background-color: white;
-        mix-blend-mode: initial;
-        filter: none;  /* Remove blur on hover or focus */
-        opacity: 1;    
-        outline-offset: calc(var(--outline-w) / 2);
-      
-        rotate: 0deg;
-    }
-    .preview:focus-within {
-        --shadow-color: oklch(var(--pink));
-        z-index: 5;
-    }
-    .preview:first-of-type:hover,
-    .preview:first-of-type:focus-within {
-        filter: none; /* Removes the blur effect */
-        opacity: 1;
-        --shadow-blur: 200px;
-        --shadow-color: oklch(var(--pink));
-        --border-color: var(--shadow-color);
-        background-color: white;
-        mix-blend-mode: initial;
-        outline-offset: calc(var(--outline-w) / 2);
-        scale: 1;
-        rotate: 0deg;
-        z-index: 6;
-    }
-    .preview:not(:first-of-type):hover,
-    .preview:not(:first-of-type):focus-within {
-        filter: grayscale(100%) sepia(5%) blur(2px); /* Keep blur effect on other articles */
-        opacity: 0.69;
-        scale: 0.85;
-        rotate: var(--rotation, -4deg);
-        outline-offset: var(--outline-w);
-    }
-
-    .preview.mobile {
-        max-height: var(--mobile--h);
-        max-width: var(--mobile--w);
-    }
-    @media (max-width: 768px) {
-        .preview__container {
-            margin-left: -10; /* Remove left margin */
+        .card-info h1 {
+            font-family: "Playfair Display";
+            font-size: 36px;
+            font-weight: 700;
+            text-shadow: rgba(0, 0, 0, 0.5) 0 10px 10px;
         }
 
-        .preview {
-            width: 100%; /* Ensure preview elements take up full width on small screens */
-            margin: 5px 0; /* Add some margin between elements */
+        /* Specific styles for the first card */
+        .card-wrap:first-child .card {
+            background-color: #444; /* Bright background for the first card */
         }
-    }
-</style>
-<script>
-    setTimeout(() => {
-        document.getElementById('splash-screen').style.display = 'none';
-    }, 5000); // Hide splash screen after 5 seconds
-    const previews = document.querySelectorAll('.preview');
-    previews.forEach(preview => {
-    });
-    const firstPreview = document.querySelector('.preview:first-of-type');
-    firstPreview.addEventListener('click', () => {
-        window.location.href = 'index1.html';
-    });
-</script>
+
+        .card-wrap:first-child .card-info:after {
+            background-image: linear-gradient(to bottom, transparent 0%, rgba(244, 0, 102, 0.688) 100%); /* Pink gradient for the first card */
+        }
+
+        /* Gray gradient for other cards */
+        .card-wrap:not(:first-child) .card-info:after {
+            background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.688) 100%); /* Gray gradient for other cards */
+        }
+
+        /* Mobile hover effect on scroll */
+        @media (max-width: 768px) {
+            .card-wrap {
+                pointer-events: none;
+            }
+
+            .card-wrap.scrolled {
+                pointer-events: auto;
+            }
+
+            .card-wrap.scrolled .card-info {
+                transform: translateY(0);
+            }
+
+            .card-wrap.scrolled .card-info p {
+                opacity: 1;
+            }
+
+            .card-wrap.scrolled .card-info:after {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .card-wrap.scrolled .card-bg {
+                opacity: 0.8;
+            }
+
+            .card-wrap.scrolled .card {
+                box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, white 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <card data-image="ep.png">
+            <h1 slot="header">Episode 1</h1>
+            <p slot="content">We're Waiting For You!</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 2</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 3</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 4</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 5</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 6</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 7</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 8</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 9</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 10</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 11</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 12</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 13</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 14</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 15</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+        <card data-image="ep1.png">
+            <h1 slot="header">Episode 16</h1>
+            <p slot="content">It Will Be Available Soon</p>
+        </card>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        Vue.config.devtools = true;
+
+        Vue.component('card', {
+            template: ` 
+                <div class="card-wrap"
+                    @mousemove="handleMouseMove"
+                    @mouseenter="handleMouseEnter"
+                    @mouseleave="handleMouseLeave"
+                    ref="card">
+                    <div class="card"
+                        :style="cardStyle">
+                        <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
+                        <div class="card-info">
+                            <slot name="header"></slot>
+                            <slot name="content"></slot>
+                        </div>
+                    </div>
+                </div>`,
+            mounted() {
+                this.width = this.$refs.card.offsetWidth;
+                this.height = this.$refs.card.offsetHeight;
+                
+                if (this.$el === this.$el.parentElement.firstChild) {
+                    this.$el.classList.add('hovered');
+                }
+            },
+            props: ['dataImage'],
+            data: () => ({
+                width: 0,
+                height: 0,
+                mouseX: 0,
+                mouseY: 0,
+                mouseLeaveDelay: null
+            }),
+            computed: {
+                mousePX() {
+                    return this.mouseX / this.width;
+                },
+                mousePY() {
+                    return this.mouseY / this.height;
+                },
+                cardStyle() {
+                    const rX = this.mousePX * 30;
+                    const rY = this.mousePY * -30;
+                    return {
+                        transform: `rotateY(${rX}deg) rotateX(${rY}deg)`
+                    };
+                },
+                cardBgTransform() {
+                    const tX = this.mousePX * -40;
+                    const tY = this.mousePY * -40;
+                    return {
+                        transform: `translateX(${tX}px) translateY(${tY}px)`
+                    };
+                },
+                cardBgImage() {
+                    return {
+                        backgroundImage: `url(${this.dataImage})`
+                    };
+                }
+            },
+            methods: {
+                handleMouseMove(e) {
+                    this.mouseX = e.pageX - this.$refs.card.offsetLeft - this.width / 2;
+                    this.mouseY = e.pageY - this.$refs.card.offsetTop - this.height / 2;
+                },
+                handleMouseEnter() {
+                    clearTimeout(this.mouseLeaveDelay);
+                    this.$el.classList.add('hovered');
+                },
+                handleMouseLeave() {
+                    this.mouseLeaveDelay = setTimeout(() => {
+                        this.$el.classList.remove('hovered');
+                        this.mouseX = 0;
+                        this.mouseY = 0;
+                    }, 1000);
+                }
+            }
+        });
+
+        const app = new Vue({
+            el: '#app'
+        });
+
+        // Mobile hover effect on scroll
+        if (window.innerWidth <= 768) {
+            const cardWraps = document.querySelectorAll('.card-wrap');
+            window.addEventListener('scroll', () => {
+                cardWraps.forEach(cardWrap => {
+                    const rect = cardWrap.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        cardWrap.classList.add('scrolled');
+                    } else {
+                        cardWrap.classList.remove('scrolled');
+                    }
+                });
+            });
+        }
+    </script>
+</body>
 </html>
