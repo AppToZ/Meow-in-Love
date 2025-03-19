@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Hover Effect</title>
+    <title>Card Hover Effect with Search</title>
     <style>
         /* Same as your existing styles, no changes here */
         body {
@@ -44,6 +44,7 @@
             transform: perspective(800px);
             transform-style: preserve-3d;
             cursor: pointer;
+            transition: filter 0.5s ease;
         }
 
         .card-wrap.hovered .card-info {
@@ -87,20 +88,20 @@
         }
 
         .card-bg {
-    opacity: 0.5;
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 5s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    pointer-events: none;
-    filter: blur(0); /* Initially no blur */
-}
+            opacity: 0.5;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 5s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+            pointer-events: none;
+            filter: blur(0); /* Initially no blur */
+        }
 
         .card-info {
             padding: 20px;
@@ -192,10 +193,96 @@
                 box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, white 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
             }
         }
-        
+
+        /* Header styles */
+        .input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+}
+
+.input {
+  border-style: none;
+  height: 50px;
+  width: 0px;
+  padding: 0px;
+  outline: none;
+  border-radius: 50%;
+  transition: 0.5s ease-in-out;
+  background-color: #121212;
+  padding-right: 40px;
+  color:#f83db7;
+}
+
+.input::placeholder,
+.input {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 17px;
+}
+
+.input::placeholder {
+  color: #8f8f8f;
+}
+
+
+
+.icon:focus ~ .input,
+.input:focus {
+  width: 290px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom: 3px solid #f83db7;
+  animation: borderAnimation 2s infinite; /* Apply border animation */
+  transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+
+/* Animation for the border */
+@keyframes borderAnimation {
+  0% {
+    border-bottom-color: #ff45af;
+  }
+  50% {
+    border-bottom-color: #ffffff;
+  }
+  100% {
+    border-bottom-color:#ff45af;
+  }
+}
+ .blur {
+  filter: blur(5px);
+}
+/* Add this to your existing CSS */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #121212;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+}
+
+header.hidden {
+    transform: translateY(-100%);
+}
     </style>
 </head>
 <body>
+    <header>
+        <div class="search-container">
+
+            <div class="input-wrapper">
+                <input type="text" id="searchInput" class="input" placeholder="Search Episode (1-16)" oninput="searchEpisode()">
+
+              </div>
+              
+
+
+        </div>
+    </header>
     <div id="app" class="container">
         <card data-image="ep.png">
             <h1 slot="header">Episode 1</h1>
@@ -349,19 +436,86 @@
         });
 
         // Mobile hover effect on scroll
-        if (window.innerWidth <= 768) {
-            const cardWraps = document.querySelectorAll('.card-wrap');
-            window.addEventListener('scroll', () => {
-                cardWraps.forEach(cardWrap => {
-                    const rect = cardWrap.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        cardWrap.classList.add('scrolled');
-                    } else {
-                        cardWrap.classList.remove('scrolled');
-                    }
-                });
-            });
+        // Mobile hover effect on scroll
+// Mobile hover effect on scroll
+if (window.innerWidth <= 768) {
+    const cardWraps = document.querySelectorAll('.card-wrap');
+    window.addEventListener('scroll', () => {
+        cardWraps.forEach(cardWrap => {
+            const rect = cardWrap.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                cardWrap.classList.add('scrolled');
+            } else {
+                cardWrap.classList.remove('scrolled');
+            }
+        });
+    });
+}
+
+// Search functionality
+function searchEpisode() {
+    const searchInput = document.getElementById('searchInput');
+    const searchTerm = searchInput.value.trim();
+    const cardWraps = document.querySelectorAll('.card-wrap');
+
+    // Check if the input is invalid (0 or greater than 16)
+    if (!/^\d+$/.test(searchTerm) || searchTerm === '0' || (Number(searchTerm) > 16)) {
+        searchInput.placeholder = "Say from 1 to 16"; // Update placeholder for invalid input
+        searchInput.value = ''; // Clear the input value
+        cardWraps.forEach(cardWrap => {
+            cardWrap.classList.remove('hovered');
+            cardWrap.classList.remove('blur');
+        });
+        return; // Exit the function early
+    } else {
+        searchInput.placeholder = "Search Episode (1-16)"; // Reset placeholder for valid input
+    }
+
+    cardWraps.forEach((cardWrap, index) => {
+        const episodeNumber = index + 1;
+        if (searchTerm === episodeNumber.toString()) {
+            cardWrap.classList.add('hovered');
+            cardWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            cardWrap.classList.remove('blur');
+        } else {
+            cardWrap.classList.remove('hovered');
+            cardWrap.classList.add('blur');
         }
+    });
+
+    if (searchTerm === '') {
+        cardWraps.forEach(cardWrap => {
+            cardWrap.classList.remove('hovered');
+            cardWrap.classList.remove('blur');
+        });
+    }
+}
+
+// Automatically trigger search input focus after 4 seconds
+setTimeout(() => {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.focus(); // Focus the search input
+}, 4000); // 4000 milliseconds = 4 seconds
+
+// Scroll behavior for search bar
+let lastScrollTop = 0;
+const header = document.querySelector('header');
+
+window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        // Scrolling down
+        header.classList.add('hidden');
+    } else {
+        // Scrolling up
+        header.classList.remove('hidden');
+        const searchInput = document.getElementById('searchInput');
+        searchInput.focus(); // Focus the search input when the header reappears
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+});
     </script>
 </body>
 </html>
