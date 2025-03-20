@@ -4,18 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
     <title>Meow In Love</title>
     <style>
         *:focus {
         outline: none !important;
-        font-family: "Raleway";
-
     }
     * {
         -webkit-tap-highlight-color: transparent;
+
     }
+    #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 1;
+            animation: fadeOut 5s ease-out forwards;
+        }
+
+        #splash-screen img {
+            width: 200px;
+            height: auto;
+            animation: bounce 1s infinite alternate;
+            filter: brightness(120%) contrast(120%); 
+
+        }
         body {
             margin: 40px 0;
             font-family: "Raleway";
@@ -279,6 +300,9 @@ header.hidden {
     </style>
 </head>
 <body>
+    <div id="splash-screen">
+        <img src="hh.gif" alt="Title" />
+    </div>
     <header>
         <div class="search-container">
 
@@ -509,6 +533,9 @@ window.addEventListener('scroll', () => {
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
 });
+setTimeout(() => {
+        document.getElementById('splash-screen').style.display = 'none';
+    }, 4000); 
     </script>
 </body>
 </html>
