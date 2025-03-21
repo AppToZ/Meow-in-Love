@@ -31,11 +31,10 @@
         }
 
         #splash-screen img {
-            width: 200px;
+            width: 200px; 
             height: auto;
             animation: bounce 1s infinite alternate;
-            filter: brightness(120%) contrast(120%); 
-
+            filter: brightness(120%) contrast(120%);
         }
         body {
             margin: 40px 0;
@@ -46,7 +45,6 @@
             -webkit-font-smoothing: antialiased;
             user-select: none; 
         }
-
         .title {
             font-family: "Raleway";
             font-size: 24px;
@@ -54,24 +52,20 @@
             color: #5D4037;
             text-align: center;
         }
-
         p {
             line-height: 2em;
         }
-
         h1 + p, p + p {
             margin-top: -5px;
             font-family: "Raleway";
 
         }
-
         .container {
             padding: 40px 80px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
         }
-
         .card-wrap {
             margin: 10px;
             transform: perspective(800px);
@@ -79,35 +73,28 @@
             cursor: pointer;
             transition: filter 0.5s ease;
         }
-
         .card-wrap.hovered .card-info {
             transform: translateY(0);
         }
-
         .card-wrap.hovered .card-info p {
             opacity: 1;
         }
-
         .card-wrap.hovered .card-info, .card-wrap.hovered .card-info p {
             transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
-
         .card-wrap.hovered .card-info:after {
             transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             opacity: 10;
             transform: translateY(0);
         }
-
         .card-wrap.hovered .card-bg {
             transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 3s cubic-bezier(0.23, 1, 0.32, 1);
             opacity: 10;
         }
-
         .card-wrap.hovered .card {
             transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
             box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, white 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
         }
-
         .card {
             position: relative;
             flex: 0 0 240px;
@@ -297,6 +284,62 @@ header {
 header.hidden {
     transform: translateY(-100%);
 }
+#searchInput{
+    color: #fff;
+  background: linear-gradient(to right, #9f9f9f 0, #fff 10%, #868686 20%);
+  background-position: 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 2s infinite linear;
+  animation-fill-mode: forwards;
+  -webkit-text-size-adjust: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+@-moz-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@-webkit-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@-o-keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
+@keyframes shine {
+  0% {
+    background-position: 0;
+  }
+  60% {
+    background-position: 180px;
+  }
+  100% {
+    background-position: 180px;
+  }
+}
     </style>
 </head>
 <body>
@@ -312,7 +355,8 @@ header.hidden {
             
         </div>
     </header>
-    <div id="app" class="container"><a href ="index1.html">
+    <div id="app" class="container">
+        <a href="index1.html">
         <card data-image="ep.png">
             <h1 slot="header">Episode 1</h1>
             <p slot="content">We're Waiting For You!</p>
