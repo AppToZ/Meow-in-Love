@@ -89,12 +89,12 @@
             transform: translateY(0);
         }
         .card-wrap.hovered .card-bg {
-            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 3s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 1s cubic-bezier(0.23, 1, 0.32, 1);
             opacity: 10;
         }
         .card-wrap.hovered .card {
             transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, white 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
+            box-shadow: rgba(255, 255, 255, 0.31) 0 0 40px 5px, white 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
         }
         .card {
             position: relative;
@@ -345,7 +345,7 @@ header.hidden {
 
 #shine{
     color: #ffffff;
-  background: linear-gradient(to right, #303030 0, #ffffff 10%, #2f2f2f 20%);
+  background: linear-gradient(to right, #f5f5f5 0, #ff338b 10%, #ffffff 20%);
   background-position: 0;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -398,99 +398,153 @@ header.hidden {
   100% {
     background-position: 250px;
   }
-}
+}        .custom-container {
+            position: fixed;
+            left: 50%;
+            top: 85%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            height: 2em;
+            width: 2em;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 1.5em;
+            border: 1px solid rgba(255, 255, 255, 0.67);
+            background-color: rgba(137, 136, 136, 0.36);
+            backdrop-filter: blur(6px);
+            transition: all 500ms;
+            box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px;
+            z-index: 1000; 
+        }
 
-.custom-container {
-  position: fixed;
-  left: 50%;
-  top: 85%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  height: 2em;
-  width: 2em;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 1.5em;
-  border: 1px solid rgba(255, 255, 255, 0.67);
-  background-color: rgba(137, 136, 136, 0.36);
-  backdrop-filter: blur(6px);
-  transition: all 500ms;
-}
+        .custom-container .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-.custom-container:hover {
-  height: 7em;
-  width: 18em;
-  border-radius: 1.5em;
-}
+        .custom-container .front {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
 
-.custom-icon {
-  height: 1.5em;
-  width: 1.5em;
-  transition: opacity 300ms;
-  color: #3a3a3a;
-}
+        .custom-container .img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+        }
 
-.custom-container:hover .custom-icon {
-  opacity: 0;
-}
+        .custom-container .circle {
+            width: 190px;
+            height: 100px;
+            right: 170px;
+            border-radius: 50%;
+            background-color: #ff7db3;
+            position: absolute;
+            filter: blur(15px);
+            animation: floating 2600ms infinite linear;
+        }
 
-.custom-content {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  height: 10em;
-  width: 16em;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.5em;
-  font-family: "Playfair Display";
-  color: hsl(0, 0%, 85%);
-  transform: translateY(100%);
-  transition: transform 600ms;
-}
+        .custom-container #bottom {
+            background-color: #ff65a5;
+            left: 170px;
+            top: 100px;
+            width: 100px;
+            height: 100px;
+            animation-delay: -800ms;
+        }
 
-.custom-container:hover .custom-content {
-  transform: translateY(0);
-}
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
 
-.custom-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+        .custom-container:hover {
+            height: 7em;
+            width: 18em;
+            border-radius: 1.5em;
+            box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px;
+        }
 
-.custom-text h1 {
-  font-size: 1em;
-  font-weight: bold;
-  line-height: 0em;
-  margin-top: 10px;
-}
+        .custom-icon {
+            height: 1.5em;
+            width: 1.5em;
+            transition: opacity 300ms;
+            color: #3a3a3a;
+        }
 
-.instagram-link {
-    display: flex;
-    align-items: center;
-    gap: 8px; 
-    text-decoration: none; 
-    color: #fff; 
-    font-size: 1.3em; 
-    margin-top: 13px; 
-    margin-left: 40px;
-    transition: color 0.3s ease; 
-}
+        .custom-container:hover .custom-icon {
+            opacity: 0;
+        }
 
-.instagram-link:hover {
-    color: #e1306c;
-}
+        .custom-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            height: 10em;
+            width: 16em;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5em;
+            font-family: "Playfair Display";
+            color: hsl(0, 0%, 85%);
+            transform: translateY(100%);
+            transition: transform 600ms;
+        }
 
-.fab.fa-instagram {
-    font-size: 1.2em;
-    color: #e1306c;
-}
+        .custom-container:hover .custom-content {
+            transform: translateY(0);
+        }
 
+        .custom-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
+        .custom-text h1 {
+            font-size: 1em;
+            font-weight: bold;
+            line-height: 0em;
+            margin-top: 10px;
+        }
 
+        .instagram-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.3em;
+            margin-top: 13px;
+            margin-left: 40px;
+            transition: color 0.3s ease;
+        }
+
+        .instagram-link:hover {
+            color: #e1306c;
+        }
+
+        .fab.fa-instagram {
+            font-size: 1.2em;
+            color: #e1306c;
+        }
     </style>
 </head>
 <body>
@@ -572,7 +626,16 @@ header.hidden {
             <h1 slot="header">Episode 16</h1>
             <p slot="content">It Will Be Available Soon</p>
         </card>
-        <div  class="custom-container" onclick="playMeow()">
+        <div class="custom-container" onclick="playMeow()">
+            <div class="content">
+                <div class="front">
+                    <div class="img">
+                        <div class="circle"></div>
+                        <div class="circle" id="right"></div>
+                        <div class="circle" id="bottom"></div>
+                    </div>
+                </div>
+            </div>
             <svg class="custom-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20ZM12 6C8.686 6 6 8.686 6 12C6 15.314 8.686 18 12 18C15.314 18 18 15.314 18 12C18 8.686 15.314 6 12 6ZM12 16C9.791 16 8 14.209 8 12C8 9.791 9.791 8 12 8C14.209 8 16 9.791 16 12C16 14.209 14.209 16 12 16Z" fill="currentColor"/>
             </svg>
