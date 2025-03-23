@@ -144,6 +144,7 @@
     </div>
 
     <div class="image-container">
+        <img src="ep0.jpg" alt="Image 1" onclick="playMeow()" />
         <img src="e11.jpg" alt="Image 1" onclick="playMeow()" />
         <img src="e12.jpg" alt="Image 2" onclick="playMeow()" />
         <img src="e13.jpg" alt="Image 3" onclick="playMeow()" />
@@ -257,6 +258,9 @@ document.addEventListener('dragstart', function (e) {
     if (e.target.tagName === 'IMG') {
         e.preventDefault(); 
     }
+});
+        document.addEventListener('contextmenu', function (e) {
+    e.preventDefault(); 
 });
     </script>
 </body>
